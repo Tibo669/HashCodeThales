@@ -55,7 +55,7 @@ with open (path + ".txt", mode) as reader:
     all_input = reader.readlines()
     N = int(all_input[0])
     for idx, line in enumerate(all_input[1:]):
-        line_splitted =  line.split(' ')
+        line_splitted = line.split(' ')
         if line_splitted[0] == 'V':
             photos_vertical_list.append(Photo(line_splitted[0], line_splitted[2:], idx))
         else:
