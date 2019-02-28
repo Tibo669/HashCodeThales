@@ -1,0 +1,41 @@
+# Import
+import sys
+import math
+import re
+import random
+
+# CLASS
+	
+# FUNCTIONS
+def score():
+	score = 0
+	
+	return score
+
+# LOAD DATA
+#path = "example"
+path = "small"
+#path = "medium"
+#path = "big"
+
+mode = "r"
+with open (path + ".in", mode) as reader:
+	all_input = (reader.readlines())
+	reader.close()
+
+#configuration = all_input[0].split(' ')  # save the first line of the file containing the configuration as a list of words
+#print (configuration)
+
+
+
+# CODE
+
+
+# SAVE OUTPUT
+outFile = open(path + ".out", "w+")
+
+result = []
+for val in result:
+	outFile.write(repr(val) + "\n")
+
+outFile.close()
