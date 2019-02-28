@@ -65,6 +65,9 @@ with open (path + ".txt", mode) as reader:
 #configuration = all_input[0].split(' ')  # save the first line of the file containing the configuration as a list of words
 #print (configuration)
 
+print(photos_vertical_list)
+print(photos_horizontal_list)
+
 
 
 # CODE
@@ -74,7 +77,7 @@ slides_result = []
 # SAVE OUTPUT
 outfile = open(path + ".out", "w+")
 
-outfile.write(len(slides_result + "\n"))
+outfile.write(str(len(slides_result)) + "\n")
 for slide in slides_result:
     outfile.write(slide + "\n")
 
