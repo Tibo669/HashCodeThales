@@ -32,7 +32,7 @@ def score(slide_1, slide_2):
     diff1 = slide_2.tags.difference(slide_1.tags)
     diff2 = slide_1.tags.difference(slide_2.tags)
 
-	return min(common, diff1, diff2)
+    return min(common, diff1, diff2)
 
 # LOAD DATA
 path = "a_example"
@@ -49,7 +49,7 @@ with open (path + ".txt", mode) as reader:
     N = int(all_input[0])
     for line in all_input[1:]:
         line_splitted =  line.split(' ')
-        if Photo(line_splitted[0] == 'V':
+        if line_splitted[0] == 'V':
             photos_vertical_list.append(Photo(line_splitted[0], line_splitted[2:]))
         else:
             photos_horizontal_list.append(Photo(line_splitted[0], line_splitted[2:]))
