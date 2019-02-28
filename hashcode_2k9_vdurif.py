@@ -34,23 +34,23 @@ class Slide:
         self.type = type
 
     def __str__(self):
-        return " ".join([p.id for p in self.photos])
+        return " ".join([str(p.id) for p in self.photos])
 
     def __repr__(self):
-        return " ".join([p.id for p in self.photos])
+        return " ".join([str(p.id) for p in self.photos])
 
 	
 # FUNCTIONS
 def score(slide_1, slide_2):
-    common = slide_1.tags.intersection(slide_2.tags)
-    diff1 = slide_2.tags.difference(slide_1.tags)
-    diff2 = slide_1.tags.difference(slide_2.tags)
+    common = len(slide_1.tags.intersection(slide_2.tags))
+    diff1 = len(slide_2.tags.difference(slide_1.tags))
+    diff2 = len(slide_1.tags.difference(slide_2.tags))
 
     return min(common, diff1, diff2)
 
 # LOAD DATA
-path = "a_example"
-#path = "b_lovely_landscapes"
+#path = "a_example"
+path = "b_lovely_landscapes"
 #path = "c_memorable_moments"
 #path = "d_pet_pictures"
 #path = "e_shiny_selfies"
@@ -89,11 +89,16 @@ for i in range(len(photos_vertical_list)):
         unordered_slide.append(Slide(set(photo1.tags + photo2.tags), [photo1, photo2], 'V'))
 
 score_map = {}
+max_score = -1
+max_id = -1
 for i in range(len(unordered_slide)):
     for j in range(i+1, len(unordered_slide)):
         slide1 = unordered_slide[i]
         slide2 = unordered_slide[j]
         current_score = score(slide1, slide2)
+        if current_score > max_score:
+            max_score = current_score
+            max_id = i
         if i in score_map:
             score_map[i][j] = current_score
         else:
@@ -104,16 +109,28 @@ for i in range(len(unordered_slide)):
             score_map[j] = {i: current_score}
 
 for key, value in score_map.items():
-    score_map[key] = OrderedDict(sorted(value.items(), key=lambda t: t[1]))
+    score_map[key] = OrderedDict(sorted(value.items(), key=lambda t: t[1], reverse=True))
 
-print([key for key in score_map])
+print([value for value in score_map.values()])
 
-slides_result = []
+slides_result = [unordered_slide[max_id]]
+last_slide = max_id
+already_in = set([photo.id for photo in unordered_slide[max_id].photos])
+current_OD = score_map[last_slide]
+while current_OD:
+    element = current_OD.popitem(last=False)
+    if not set([photo.id for photo in unordered_slide[element[0]].photos]).intersection(already_in):
+        slides_result.append(unordered_slide[element[0]])
+        [already_in.add(photo.id) for photo in unordered_slide[element[0]].photos]
+        last_slide = element[0]
+        current_OD = score_map[last_slide]
+
+
 # SAVE OUTPUT
 outfile = open(path + ".out", "w+")
 
 outfile.write(str(len(slides_result)) + "\n")
 for slide in slides_result:
-    outfile.write(slide + "\n")
+    outfile.write(str(slide) + "\n")
 
 outfile.close()
