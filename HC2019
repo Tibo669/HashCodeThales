@@ -13,10 +13,11 @@ def score():
 	return score
 
 # LOAD DATA
-#path = "example"
-path = "small"
-#path = "medium"
-#path = "big"
+path = "a_example"
+#path = "b_lovely_landscapes"
+#path = "c_memorable_moments"
+#path = "d_pet_pictures"
+#path = "e_shiny_selfies"
 
 mode = "r"
 with open (path + ".in", mode) as reader:
