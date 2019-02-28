@@ -52,7 +52,7 @@ def score(slide_1, slide_2):
 #path = "a_example"
 # path = "b_lovely_landscapes"
 # path = "c_memorable_moments"
-#path = "d_pet_pictures"
+path = "d_pet_pictures"
 #path = "e_shiny_selfies"
 
 mode = "r"
@@ -84,7 +84,7 @@ for photo in photos_horizontal_list:
     unordered_slide.append(Slide(set(photo.tags), [photo], photo.type))
 
 for i in range(len(photos_vertical_list)):
-    for j in range(i+1, len(photos_vertical_list)):
+    for j in range(i+1, min(len(photos_vertical_list), i+20)):
         photo1 = photos_vertical_list[i]
         photo2 = photos_vertical_list[j]
         unordered_slide.append(Slide(set(photo1.tags + photo2.tags), [photo1, photo2], 'V'))
