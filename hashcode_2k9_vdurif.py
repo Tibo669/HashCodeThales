@@ -26,6 +26,12 @@ class Slide:
         self.photos = photos
         self.type = type
 
+    def __str__(self):
+        return " ".join([p.id for p in photos])
+
+    def __repr__(self):
+        return " ".join([p.id for p in photos])
+
 	
 # FUNCTIONS
 def score(slide_1, slide_2):
@@ -64,12 +70,12 @@ with open (path + ".txt", mode) as reader:
 # CODE
 
 
-result = []
+slides_result = []
 # SAVE OUTPUT
 outFile = open(path + ".out", "w+")
 
-outfile.write(len(result + "\n"))
-for val in result:
-    outFile.write(repr(val) + "\n")
+outfile.write(len(slides_result + "\n"))
+for slide in slides_result:
+    outFile.write(slide + "\n")
 
 outFile.close()
