@@ -10,9 +10,10 @@ class Photo:
 
     # type: H (horizontal) or V (vertical)
     # tags: set()
-    def __init__(self, type, tags):
+    def __init__(self, type, tags, id):
         self.type = type
         self.tags = tags
+        self.id = id
 
 
 class Slide:
@@ -47,12 +48,12 @@ photos_horizontal_list = []
 with open (path + ".txt", mode) as reader:
     all_input = reader.readlines()
     N = int(all_input[0])
-    for line in all_input[1:]:
+    for idx, line in enumerate(all_input[1:]):
         line_splitted =  line.split(' ')
         if line_splitted[0] == 'V':
-            photos_vertical_list.append(Photo(line_splitted[0], line_splitted[2:]))
+            photos_vertical_list.append(Photo(line_splitted[0], line_splitted[2:], idx))
         else:
-            photos_horizontal_list.append(Photo(line_splitted[0], line_splitted[2:]))
+            photos_horizontal_list.append(Photo(line_splitted[0], line_splitted[2:], idx))
 
 
 #configuration = all_input[0].split(' ')  # save the first line of the file containing the configuration as a list of words
@@ -63,10 +64,11 @@ with open (path + ".txt", mode) as reader:
 # CODE
 
 
+result = []
 # SAVE OUTPUT
 outFile = open(path + ".out", "w+")
 
-result = []
+outfile.write(len(result + "\n"))
 for val in result:
     outFile.write(repr(val) + "\n")
 
