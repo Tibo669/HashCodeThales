@@ -3,13 +3,14 @@ import sys
 import math
 import re
 import random
+from collections import OrderedDict
 
 # CLASS
 
 class Photo:
 
     # type: H (horizontal) or V (vertical)
-    # tags: set()
+    # tags: list()
     def __init__(self, type, tags, id):
         self.type = type
         self.tags = tags
@@ -77,7 +78,35 @@ print([repr(photo) for photo in photos_horizontal_list])
 
 
 # CODE
+unordered_slide = []
+for photo in photos_horizontal_list:
+    unordered_slide.append(Slide(set(photo.tags), [photo], photo.type))
 
+for i in range(len(photos_vertical_list)):
+    for j in range(i+1, len(photos_vertical_list)):
+        photo1 = photos_vertical_list[i]
+        photo2 = photos_vertical_list[j]
+        unordered_slide.append(Slide(set(photo1.tags + photo2.tags), [photo1, photo2], 'V'))
+
+score_map = {}
+for i in range(len(unordered_slide)):
+    for j in range(i+1, len(unordered_slide)):
+        slide1 = unordered_slide[i]
+        slide2 = unordered_slide[j]
+        current_score = score(slide1, slide2)
+        if i in score_map:
+            score_map[i][j] = current_score
+        else:
+            score_map[i] = {j: current_score}
+        if j in score_map:
+            score_map[j][i] = current_score
+        else:
+            score_map[j] = {i: current_score}
+
+for key, value in score_map.items():
+    score_map[key] = OrderedDict(sorted(value.items(), key=lambda t: t[1]))
+
+print([key for key in score_map])
 
 slides_result = []
 # SAVE OUTPUT
