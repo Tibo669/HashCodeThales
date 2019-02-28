@@ -15,6 +15,12 @@ class Photo:
         self.tags = tags
         self.id = id
 
+    def __str__(self):
+        return "type: %s, tags: %s, id: %s" % (self.type, str(self.tags), self.id)
+
+    def __repr__(self):
+        return "type: %s, tags: %s, id: %s" % (self.type, str(self.tags), self.id)
+
 
 class Slide:
 
@@ -55,7 +61,7 @@ with open (path + ".txt", mode) as reader:
     all_input = reader.readlines()
     N = int(all_input[0])
     for idx, line in enumerate(all_input[1:]):
-        line_splitted = line.split(' ')
+        line_splitted = line.strip().split(' ')
         if line_splitted[0] == 'V':
             photos_vertical_list.append(Photo(line_splitted[0], line_splitted[2:], idx))
         else:
@@ -65,8 +71,8 @@ with open (path + ".txt", mode) as reader:
 #configuration = all_input[0].split(' ')  # save the first line of the file containing the configuration as a list of words
 #print (configuration)
 
-print(photos_vertical_list)
-print(photos_horizontal_list)
+print([repr(photo) for photo in photos_vertical_list])
+print([repr(photo) for photo in photos_horizontal_list])
 
 
 
