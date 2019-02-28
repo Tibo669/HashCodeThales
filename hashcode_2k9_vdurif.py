@@ -27,10 +27,10 @@ class Slide:
         self.type = type
 
     def __str__(self):
-        return " ".join([p.id for p in photos])
+        return " ".join([p.id for p in self.photos])
 
     def __repr__(self):
-        return " ".join([p.id for p in photos])
+        return " ".join([p.id for p in self.photos])
 
 	
 # FUNCTIONS
