@@ -51,7 +51,7 @@ def score(slide_1, slide_2):
 # LOAD DATA
 #path = "a_example"
 # path = "b_lovely_landscapes"
-path = "c_memorable_moments"
+# path = "c_memorable_moments"
 #path = "d_pet_pictures"
 #path = "e_shiny_selfies"
 
@@ -89,6 +89,8 @@ for i in range(len(photos_vertical_list)):
         photo2 = photos_vertical_list[j]
         unordered_slide.append(Slide(set(photo1.tags + photo2.tags), [photo1, photo2], 'V'))
 
+print('Nb slides : ' + str(len(unordered_slide)))
+"""
 print('unordered_slide init')
 score_map = {}
 max_score = -1
@@ -103,31 +105,58 @@ for i in range(len(unordered_slide)):
             max_score = current_score
             max_id = i
         if i in score_map:
-            score_map[i][j] = current_score
+            score_map[i].append((j, current_score))
         else:
-            score_map[i] = {j: current_score}
+            score_map[i] = [(j, current_score)]
         if j in score_map:
-            score_map[j][i] = current_score
+            score_map[j].append((i, current_score))
         else:
-            score_map[j] = {i: current_score}
+            score_map[j] = [(i, current_score)]
 
 print('calcul score')
 for key, value in score_map.items():
-    score_map[key] = OrderedDict(sorted(value.items(), key=lambda t: t[1], reverse=True))
+    score_map[key] = sorted(score_map[key], key=lambda t: t[1])
 print('tri score')
+"""
 # print([value for value in score_map.values()])
 print('score_map initialisation')
-slides_result = [unordered_slide[max_id]]
-last_slide = max_id
-already_in = set([photo.id for photo in unordered_slide[max_id].photos])
-current_OD = score_map[last_slide]
-while current_OD:
-    element = current_OD.popitem(last=False)
-    if not set([photo.id for photo in unordered_slide[element[0]].photos]).intersection(already_in):
-        slides_result.append(unordered_slide[element[0]])
-        [already_in.add(photo.id) for photo in unordered_slide[element[0]].photos]
-        last_slide = element[0]
-        current_OD = score_map[last_slide]
+initial = 0
+max_iter = 100
+max_limit = 7
+slides_result = [unordered_slide[initial]]
+last_slide = unordered_slide[initial]
+already_in = set([photo.id for photo in unordered_slide[initial].photos])
+del [unordered_slide[initial]]
+
+while unordered_slide:
+    max_value = -1
+    max_id = -1
+    next_slide = None
+    next_slide_position = -1
+    for i in range(max_iter):
+        if i < len(unordered_slide):
+            if set([photo.id for photo in unordered_slide[i].photos]).intersection(already_in):
+                del unordered_slide[i]
+            else:
+                current_score = score(last_slide, unordered_slide[i])
+                if current_score > max_limit:
+                    next_slide = unordered_slide[i]
+                    next_slide_position = i
+                    break
+
+                if current_score > max_value:
+                    max_value = current_score
+                    max_id = i
+    else:
+        if max_id > -1:
+            next_slide = unordered_slide[max_id]
+            next_slide_position = max_id
+    if next_slide:
+        print(len(unordered_slide))
+        slides_result.append(next_slide)
+        [already_in.add(photo.id) for photo in next_slide.photos]
+        del unordered_slide[next_slide_position]
+        last_slide = next_slide
 
 
 # SAVE OUTPUT
