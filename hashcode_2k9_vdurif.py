@@ -72,10 +72,10 @@ with open (path + ".txt", mode) as reader:
 
 slides_result = []
 # SAVE OUTPUT
-outFile = open(path + ".out", "w+")
+outfile = open(path + ".out", "w+")
 
 outfile.write(len(slides_result + "\n"))
 for slide in slides_result:
-    outFile.write(slide + "\n")
+    outfile.write(slide + "\n")
 
-outFile.close()
+outfile.close()
