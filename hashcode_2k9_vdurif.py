@@ -50,8 +50,8 @@ def score(slide_1, slide_2):
 
 # LOAD DATA
 #path = "a_example"
-path = "b_lovely_landscapes"
-#path = "c_memorable_moments"
+# path = "b_lovely_landscapes"
+path = "c_memorable_moments"
 #path = "d_pet_pictures"
 #path = "e_shiny_selfies"
 
@@ -72,10 +72,11 @@ with open (path + ".txt", mode) as reader:
 #configuration = all_input[0].split(' ')  # save the first line of the file containing the configuration as a list of words
 #print (configuration)
 
-print([repr(photo) for photo in photos_vertical_list])
-print([repr(photo) for photo in photos_horizontal_list])
+# print([repr(photo) for photo in photos_vertical_list])
+# print([repr(photo) for photo in photos_horizontal_list])
 
 
+print('Lecture input')
 
 # CODE
 unordered_slide = []
@@ -88,10 +89,12 @@ for i in range(len(photos_vertical_list)):
         photo2 = photos_vertical_list[j]
         unordered_slide.append(Slide(set(photo1.tags + photo2.tags), [photo1, photo2], 'V'))
 
+print('unordered_slide init')
 score_map = {}
 max_score = -1
 max_id = -1
 for i in range(len(unordered_slide)):
+    print(i)
     for j in range(i+1, len(unordered_slide)):
         slide1 = unordered_slide[i]
         slide2 = unordered_slide[j]
@@ -108,11 +111,12 @@ for i in range(len(unordered_slide)):
         else:
             score_map[j] = {i: current_score}
 
+print('calcul score')
 for key, value in score_map.items():
     score_map[key] = OrderedDict(sorted(value.items(), key=lambda t: t[1], reverse=True))
-
-print([value for value in score_map.values()])
-
+print('tri score')
+# print([value for value in score_map.values()])
+print('score_map initialisation')
 slides_result = [unordered_slide[max_id]]
 last_slide = max_id
 already_in = set([photo.id for photo in unordered_slide[max_id].photos])
