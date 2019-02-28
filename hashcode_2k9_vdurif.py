@@ -28,13 +28,11 @@ class Slide:
 	
 # FUNCTIONS
 def score(slide_1, slide_2):
-    score = 0
+    common = slide_1.tags.intersection(slide_2.tags)
+    diff1 = slide_2.tags.difference(slide_1.tags)
+    diff2 = slide_1.tags.difference(slide_2.tags)
 
-    common_tags = slide_1.tags
-    tags_slide1_not_slide2 = set(slide_1.tags)
-    tags_slide2_not_slide1 =
-
-    return min()
+	return min(common, diff1, diff2)
 
 # LOAD DATA
 path = "a_example"
